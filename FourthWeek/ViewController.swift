@@ -24,30 +24,114 @@ class ViewController: UIViewController {
     
     let redView = UIView()
     let greenView = UIView()
+    let grayView = UIView()
+    
+    let btn = UIButton()
+    
+    var nextButton3: UIButton {
+        print("Button 버튼버튼")
+        btn.setTitle("다음으로", for: .normal)
+        btn.backgroundColor = .black
+        btn.tintColor = .white
+        btn.addTarget(self, action: #selector(nextButtonTapped), for: .touchUpInside)
+        return btn
+    }
+    
+    var nextButton2: UIButton {
+        let btn = UIButton()
+        print("Button 버튼버튼")
+        btn.setTitle("다음으로", for: .normal)
+        btn.backgroundColor = .black
+        btn.tintColor = .white
+        btn.addTarget(self, action: #selector(nextButtonTapped), for: .touchUpInside)
+        return btn
+    }
+    
+    lazy var nextButton = {
+        let btn = UIButton()
+        print("Button 버튼버튼")
+        btn.setTitle("다음으로", for: .normal)
+        btn.backgroundColor = .black
+        btn.tintColor = .white
+        btn.addTarget(self, action: #selector(nextButtonTapped), for: .touchUpInside)
+        return btn
+    }()
+    
+    @objc
+    func nextButtonTapped() {
+        print(#function)
+        
+        let vc = BookViewController()
+        present(vc, animated: true)
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        print("viewDidLoad")
  
         frameBasedLayout()
         autoLayoutConstraints()
         autoLayoutAnchor()
         
-        autoLayoutSnapKit()
+        autoLayoutSnapKit2()
+        configureButton()
         
+//        autoLayoutSnapKit()
+        
+    }
+    
+    func configureButton() {
+        view.addSubview(nextButton3)
+        
+        nextButton3.snp.makeConstraints { make in
+            make.horizontalEdges.equalTo(view.safeAreaLayoutGuide).inset(40)
+            make.bottom.equalTo(view.safeAreaLayoutGuide).inset(100)
+            make.height.equalTo(50)
+        }
+    }
+    
+
+    
+    func autoLayoutSnapKit2() {
+        view.addSubview(redView)
+        view.addSubview(grayView)
+        redView.addSubview(greenView)
+        
+        redView.backgroundColor = .red
+        grayView.backgroundColor = .gray
+        greenView.backgroundColor = .green
+        
+        redView.snp.makeConstraints { make in
+            make.size.equalTo(200)
+            make.center.equalToSuperview()
+        }
+        
+        greenView.snp.makeConstraints { make in
+            make.edges.equalToSuperview()
+        }
+        
+        grayView.snp.makeConstraints { make in
+            make.edges.equalTo(redView).inset(60)
+        }
     }
     
     func autoLayoutSnapKit() {
         view.addSubview(redView)
         view.addSubview(greenView)
+        view.addSubview(grayView)
         
         redView.backgroundColor = .red
         greenView.backgroundColor = .green
+        grayView.backgroundColor = .gray
         
         redView.snp.makeConstraints { make in
             /* make.horizontalEdges.equalTo(view.safeAreaLayoutGuide)
             make.verticalEdges.equalTo(view.safeAreaLayoutGuide) */
             // 위 2줄을 아래로 퉁치기 가능
-            make.edges.equalTo(view.safeAreaLayoutGuide)
+            make.edges.equalTo(view.safeAreaLayoutGuide).inset(50)
+//            make.top.leading.equalTo(view.safeAreaLayoutGuide).offset(50)
+//            make.bottom.trailing.equalTo(view.safeAreaLayoutGuide).offset(-50)
         }
         
         greenView.snp.makeConstraints { make in
@@ -60,6 +144,12 @@ class ViewController: UIViewController {
            /* make.width.equalTo(200)
             make.height.equalTo(200) */
             // 아래처럼 위 2줄 퉁칠 수 있음
+            make.size.equalTo(200)
+        }
+        
+        grayView.snp.makeConstraints { make in
+            make.top.equalTo(greenView.snp.bottom).offset(50)
+            make.centerX.equalTo(greenView.snp.centerX).offset(25)
             make.size.equalTo(200)
         }
     }
