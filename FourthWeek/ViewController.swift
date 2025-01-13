@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import SnapKit
 
 /*
  1. 스토리보드에서 객체 얹이기
@@ -20,6 +21,9 @@ class ViewController: UIViewController {
     let emailTextField = UITextField()  // @IBOutlet var emailnTextField: UITextField!
     let passwordTextField = UITextField()
     let nameTextField = UITextField()
+    
+    let redView = UIView()
+    let greenView = UIView()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -27,6 +31,37 @@ class ViewController: UIViewController {
         frameBasedLayout()
         autoLayoutConstraints()
         autoLayoutAnchor()
+        
+        autoLayoutSnapKit()
+        
+    }
+    
+    func autoLayoutSnapKit() {
+        view.addSubview(redView)
+        view.addSubview(greenView)
+        
+        redView.backgroundColor = .red
+        greenView.backgroundColor = .green
+        
+        redView.snp.makeConstraints { make in
+            /* make.horizontalEdges.equalTo(view.safeAreaLayoutGuide)
+            make.verticalEdges.equalTo(view.safeAreaLayoutGuide) */
+            // 위 2줄을 아래로 퉁치기 가능
+            make.edges.equalTo(view.safeAreaLayoutGuide)
+        }
+        
+        greenView.snp.makeConstraints { make in
+            /* make.centerX.equalTo(view.safeAreaLayoutGuide)
+            make.centerY.equalTo(view.safeAreaLayoutGuide) */
+            // 마찬가지로 위 2줄을 퉁칠 수 있음
+            // make.centerX.centerY.equalTo(view.safeAreaLayoutGuide)
+            // 위로 줄인걸 아래처럼 사용 가능
+            make.center.equalTo(view.safeAreaLayoutGuide)
+           /* make.width.equalTo(200)
+            make.height.equalTo(200) */
+            // 아래처럼 위 2줄 퉁칠 수 있음
+            make.size.equalTo(200)
+        }
     }
 
     func frameBasedLayout() {
