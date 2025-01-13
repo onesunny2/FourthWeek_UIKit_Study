@@ -19,49 +19,14 @@ class ViewController: UIViewController {
     // 1. 아웃렛 연결하기 (class 인스턴스로 잡아서 연결)
     let emailTextField = UITextField()  // @IBOutlet var emailnTextField: UITextField!
     let passwordTextField = UITextField()
+    let nameTextField = UITextField()
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        view.addSubview(passwordTextField)
-        // ⭐️⭐️⭐️ 이걸 설정하지 않으면 오토레이아웃 적용이 안됨!
-        passwordTextField.translatesAutoresizingMaskIntoConstraints = true
-        passwordTextField.borderStyle = .bezel
-        
-        let top = NSLayoutConstraint(item: passwordTextField,
-                                     attribute: .top, /* item의 위쪽에 여백을 줄거야 */
-                                     relatedBy: .equal,
-                                     toItem: view.safeAreaLayoutGuide, /* 누구 기준으로 잡을건데? */
-                                     attribute: .top, /* view.safeAreaLayoutGuide 중에서도 가장 상단을 기준으로 잡을거야 */
-                                     multiplier: 1,
-                                     constant: 50)
-        NSLayoutConstraint(item: passwordTextField,
-                           attribute: .leading,
-                           relatedBy: .equal,
-                           toItem: view.safeAreaLayoutGuide, /* 누구 기준으로 잡을건데? */
-                           attribute: .leading,
-                           multiplier: 1,
-                           constant: 40).isActive = true
-        
-        NSLayoutConstraint(item: passwordTextField,
-                           attribute: .trailing,
-                           relatedBy: .equal,
-                           toItem: view.safeAreaLayoutGuide, /* 누구 기준으로 잡을건데? */
-                           attribute: .trailing,
-                           multiplier: 1,
-                           constant: -40).isActive = true
-        
-        NSLayoutConstraint(item: passwordTextField,
-                           attribute: .height,
-                           relatedBy: .equal,
-                           toItem: nil, /* 누구 기준으로 잡을건데? - 비교대상이 없어서 nil */
-                           attribute: .height,
-                           multiplier: 1,
-                           constant: 50).isActive = true
-        
-        top.isActive = true
-        
+ 
         frameBasedLayout()
+        autoLayoutConstraints()
+        autoLayoutAnchor()
     }
 
     func frameBasedLayout() {
@@ -71,5 +36,59 @@ class ViewController: UIViewController {
         emailTextField.frame = CGRect(x: 50, y: 100, width: 293, height: 40)
         // 4. 뷰 속성 조절
         emailTextField.borderStyle = .bezel
+    }
+    
+    func autoLayoutConstraints() {
+        view.addSubview(passwordTextField)
+        // ⭐️⭐️⭐️ 이걸 설정하지 않으면 오토레이아웃 적용이 안됨!
+        passwordTextField.translatesAutoresizingMaskIntoConstraints = false
+        passwordTextField.borderStyle = .bezel
+        
+        let top = NSLayoutConstraint(item: passwordTextField,
+                                     attribute: .top, /* item의 위쪽에 여백을 줄거야 */
+                                     relatedBy: .equal,
+                                     toItem: view.safeAreaLayoutGuide, /* 누구 기준으로 잡을건데? */
+                                     attribute: .top, /* view.safeAreaLayoutGuide 중에서도 가장 상단을 기준으로 잡을거야 */
+                                     multiplier: 1,
+                                     constant: 50)
+        let leading = NSLayoutConstraint(item: passwordTextField,
+                           attribute: .leading,
+                           relatedBy: .equal,
+                           toItem: view.safeAreaLayoutGuide, /* 누구 기준으로 잡을건데? */
+                           attribute: .leading,
+                           multiplier: 1,
+                           constant: 40)
+        
+        let trailing = NSLayoutConstraint(item: passwordTextField,
+                           attribute: .trailing,
+                           relatedBy: .equal,
+                           toItem: view.safeAreaLayoutGuide, /* 누구 기준으로 잡을건데? */
+                           attribute: .trailing,
+                           multiplier: 1,
+                           constant: -40)
+        
+        let height = NSLayoutConstraint(item: passwordTextField,
+                           attribute: .height,
+                           relatedBy: .equal,
+                           toItem: nil, /* 누구 기준으로 잡을건데? - 비교대상이 없어서 nil */
+                           attribute: .height,
+                           multiplier: 1,
+                           constant: 50)
+        
+        view.addConstraints([top, leading, trailing, height])
+    }
+    
+    func autoLayoutAnchor() {
+        view.addSubview(nameTextField)
+        nameTextField.translatesAutoresizingMaskIntoConstraints = false
+        
+        NSLayoutConstraint.activate([
+            nameTextField.centerXAnchor.constraint(equalTo: view.centerXAnchor), /* view의 센터랑 똑같이 맞출래 */
+            nameTextField.widthAnchor.constraint(equalToConstant: 300),
+            nameTextField.heightAnchor.constraint(equalToConstant: 50),
+            nameTextField.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
+        ])
+        
+        nameTextField.backgroundColor = .systemIndigo
     }
 }
