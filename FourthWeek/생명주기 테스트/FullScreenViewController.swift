@@ -8,6 +8,8 @@
 import UIKit
 
 class FullScreenViewController: UIViewController {
+    
+    let colors: [UIColor] = [.black, .orange, .systemIndigo, .brown, .purple]
 
     @IBOutlet var fullScreenDismissButton: UIButton!
     
@@ -15,6 +17,8 @@ class FullScreenViewController: UIViewController {
         super.viewDidLoad()
 
         print("FullScreen",#function)
+        
+        view.backgroundColor = colors.randomElement()
     }
     
     override func viewWillAppear(_ animated: Bool) {

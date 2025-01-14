@@ -8,11 +8,15 @@
 import UIKit
 
 class NavigationViewController: UIViewController {
+    
+    let colors: [UIColor] = [.black, .orange, .systemIndigo, .brown, .purple]
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
         print("Navigation",#function)
+        
+        view.backgroundColor = colors.randomElement()
 
     }
 

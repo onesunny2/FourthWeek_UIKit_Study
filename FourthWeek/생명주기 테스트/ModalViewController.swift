@@ -8,12 +8,15 @@
 import UIKit
 
 class ModalViewController: UIViewController {
+    
+    let colors: [UIColor] = [.black, .orange, .systemIndigo, .brown, .purple]
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
         print("Modal",#function)
 
+        view.backgroundColor = colors.randomElement()
     }
 
     override func viewWillAppear(_ animated: Bool) {

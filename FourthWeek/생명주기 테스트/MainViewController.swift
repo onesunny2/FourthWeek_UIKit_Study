@@ -9,11 +9,14 @@ import UIKit
 
 class MainViewController: UIViewController {
     
+    let colors: [UIColor] = [.black, .orange, .systemIndigo, .brown, .purple]
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
         print("Main",#function)
+        
+        view.backgroundColor = colors.randomElement()
 
     }
     
