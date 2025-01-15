@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Alamofire
 import SnapKit
 
 class MarketViewController: UIViewController {
@@ -20,6 +21,7 @@ class MarketViewController: UIViewController {
         configureView()
         configureTableView()
 
+        callRequest()
     }
     
     func configureTableView() {
@@ -38,6 +40,25 @@ class MarketViewController: UIViewController {
     
     func configureView() {
         view.backgroundColor = .white
+    }
+    
+    func callRequest() {
+        let url = "https://api.upbit.com/v1/market/all"
+        
+        AF.request(url, method: .get)
+            .validate(statusCode: 200..<300)
+            .responseDecodable(of: [Market].self) { response in
+
+                print(response.response?.statusCode)
+                
+                switch response.result {
+                case .success(let value):
+                    dump(value)
+                    
+                case .failure(let error):
+                    print(error)
+                }
+            }
     }
 
 }

@@ -59,6 +59,7 @@ class KakaoBookSearchViewController: UIViewController {
     /*
      1. 검색어
      2. 이미지 썸네일
+     3. 똑같은 내용 검색했을 때
      */
 
     func callRequest(query: String) {
@@ -70,24 +71,28 @@ class KakaoBookSearchViewController: UIViewController {
             "Authorization": APIKey.kakao
         ]
         
-        AF.request(url, method: .get, headers: header).responseDecodable(of: Book.self) { response in
-            
-            switch response.result {
-            case .success(let value):
+        AF.request(url, method: .get, headers: header)
+            .validate(statusCode: 200..<300)
+            .responseDecodable(of: Book.self) { response in
                 
+                print(response.response?.statusCode)
                 
-                if self.list == value.documents {
-                    print("again")
-                } else {
-                    print("success")
-                    self.list = value.documents
-                    self.tableView.reloadData()
+                switch response.result {
+                case .success(let value):
+                    
+                    
+                    if self.list == value.documents {
+                        print("again")
+                    } else {
+                        print("success")
+                        self.list = value.documents
+                        self.tableView.reloadData()
+                    }
+                    
+                case .failure(let error):
+                    print(error)
                 }
-  
-            case .failure(let error):
-                print(error)
             }
-        }
     }
 
 }
