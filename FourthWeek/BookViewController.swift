@@ -10,33 +10,21 @@ import SnapKit
 
 class BookViewController: UIViewController {
     
-    lazy var collectionView = UICollectionView(frame: .zero, collectionViewLayout: createCollectionViewLayout())
+    var mainView = BookView()
+    
+    // ⭐️ 절대로 슈퍼뷰를 호출하지 말 것!
+    override func loadView() {  // loadView - viewDidLoad 순서로 호출
+        view = mainView
+    }
     
     
     // tableView 같은 것도 검색해보기 (programmingly라고 검색하면 코드베이스 많이 나옴)
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        view.backgroundColor = .orange
         
-        view.addSubview(collectionView)
-        
-        collectionView.snp.makeConstraints { make in
-            make.edges.equalToSuperview()
-        }
-        
-        collectionView.delegate = self
-        collectionView.dataSource = self
-        collectionView.register(BookCollectionViewCell.self, forCellWithReuseIdentifier: "BookCollectionViewCell")
+        mainView.collectionView.delegate = self
+        mainView.collectionView.dataSource = self
 
-    }
-    
-    func createCollectionViewLayout() -> UICollectionViewLayout {
-        let layout = UICollectionViewFlowLayout()
-        layout.itemSize = CGSize(width: 50, height: 50)
-        layout.scrollDirection = .vertical
-
-        return layout
     }
   
 }

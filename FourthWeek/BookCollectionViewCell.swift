@@ -23,7 +23,7 @@ class BookCollectionViewCell: UICollectionViewCell {
             make.edges.equalTo(safeAreaLayoutGuide)  // 알아서 셀 기준으로 영역을 잡음
         }
         
-        bookCoverImageView.backgroundColor = .blue
+        bookCoverImageView.backgroundColor = .systemIndigo
     }
     
     required init?(coder: NSCoder) {
