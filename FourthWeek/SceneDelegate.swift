@@ -17,7 +17,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         guard let scene = (scene as? UIWindowScene) else { return }
         window = UIWindow(windowScene: scene)  // 여기서 더이상 window가 nil이 아니게 됨
         
-        let nav = UINavigationController(rootViewController: BookViewController())
+        let nav = UINavigationController(rootViewController: KakaoBookSearchViewController())
         
         window?.rootViewController = nav
         window?.makeKeyAndVisible()

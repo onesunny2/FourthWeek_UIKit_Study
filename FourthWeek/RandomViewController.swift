@@ -151,7 +151,7 @@ class RandomViewController: UIViewController , ViewConfiguration {
     
     @objc
     func userButtonTapped() {
-        NetworkManager.shared.randomUser(completionHandler: <#(String) -> (Void)#>)
+//        NetworkManager.shared.randomUser(completionHandler: <#(String) -> (Void)#>)
     }
     
 }

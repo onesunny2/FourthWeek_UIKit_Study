@@ -81,43 +81,24 @@ class KakaoBookSearchViewController: UIViewController {
     func callRequest(query: String) {
         print(#function)
         
-        // guard let keyword = searchBar.text else { return }
-        let url = "https://dapi.kakao.com/v3/search/book?query=\(query)&size=20&page=\(page)"
-        print(url, page)
-        let header: HTTPHeaders = [
-            "Authorization": APIKey.kakao
-        ]
-        
-        AF.request(url, method: .get, headers: header)
-            .validate(statusCode: 200..<300)
-            .responseDecodable(of: Book.self) { response in
-                
-                print(response.response?.statusCode)
-                
-                switch response.result {
-                case .success(let value):
-                    
-                    print("Success")
-                    
-                    self.isEnd = value.meta.is_end
-                    
-                    if self.page == 1 {
-                        self.list = value.documents
-                    } else {
-                        // page 1 1-20 추가, 2 21-40 추가
-                        self.list.append(contentsOf: value.documents)
-                    }
-
-                    self.tableView.reloadData()
-                    
-                    if self.page == 1 {
-                        self.tableView.scrollToRow(at: IndexPath(row: 0, section: 0), at: .top, animated: false)
-                    }
-                    
-                case .failure(let error):
-                    print(error)
-                }
+        NetworkManager.shared.callKakaoBookAPI(query: query, page: page) { value in
+            
+            self.isEnd = value.meta.is_end  // vale.isend 값과
+            
+            if self.page == 1 {
+                self.list = value.documents  // value.documents의 값을 잘 전달해주면 됨
+            } else {
+                // page 1 1-20 추가, 2 21-40 추가
+                self.list.append(contentsOf: value.documents)
             }
+
+            self.tableView.reloadData()
+            
+            if self.page == 1 {
+                self.tableView.scrollToRow(at: IndexPath(row: 0, section: 0), at: .top, animated: false)
+            }
+        }
+ 
     }
 
 }
