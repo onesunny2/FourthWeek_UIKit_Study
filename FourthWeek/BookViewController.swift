@@ -21,28 +21,16 @@ class BookViewController: UIViewController {
     // tableView 같은 것도 검색해보기 (programmingly라고 검색하면 코드베이스 많이 나옴)
     override func viewDidLoad() {
         super.viewDidLoad()
+       
+        UserDefaultsManager.shared.age = 50
         
-        mainView.collectionView.delegate = self
-        mainView.collectionView.dataSource = self
-
+        NetworkManager.shared.randomUser { name in
+            
+        } // 여기서는 알라모 Import 안해도 됨
+        
+        navigationItem.title = ""  // ??? 어떻게 꺼내오지
     }
   
 }
 
-extension BookViewController: UICollectionViewDelegate, UICollectionViewDataSource {
-    
-    
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 100
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "BookCollectionViewCell", for: indexPath) as! BookCollectionViewCell
-        
-        cell.bookCoverImageView.layer.cornerRadius = 10
-        
-        return cell
-    }
-    
-    
-}
+
